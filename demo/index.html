@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="//js.arcgis.com/3.13/esri/css/esri.css" rel="stylesheet" />
+    <link href="index.css" rel="stylesheet" />
+    <script src="../bower_components/polyfills/url.js"></script>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        (function (root) {
+            var dojoConfig = {
+                async: true,
+                packages: [
+                   {
+                       name: 'QueryStringManager',
+                       location: root + "/..",
+                       main: 'QueryStringManager'
+                   }
+                ]
+            };
+            window.dojoConfig = dojoConfig;
+        }(location.pathname.replace(/\/[^\/]*$/, "")));
+    </script>
+    <script src="//js.arcgis.com/3.13/init.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

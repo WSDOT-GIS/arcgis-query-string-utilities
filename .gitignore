@@ -1,0 +1,7 @@
+bin/
+obj/
+.vs/
+bower_components/
+packages/
+*.suo
+*.user

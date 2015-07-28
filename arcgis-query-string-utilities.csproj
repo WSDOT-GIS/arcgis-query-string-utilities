@@ -41,7 +41,18 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="bower_components\arcgis-layer-list\LayerList.css" />
+    <Content Include="bower_components\arcgis-layer-list\LayerList.js" />
+    <Content Include="bower_components\arcgis-layer-list\LayerOptionsDialog.js" />
+    <Content Include="bower_components\arcgis-layer-list\legend-helper\LegendHelper.js" />
+    <Content Include="bower_components\arcgis-layer-list\legend-helper\LegendResponse.js" />
+    <Content Include="bower_components\arcgis-layer-list\metadataUtils.js" />
+    <Content Include="bower_components\customevent-polyfill\customevent-polyfill.js" />
+    <Content Include="bower_components\customevent-polyfill\customevent-polyfill.min.js" />
+    <Content Include="bower_components\dialog-polyfill\dialog-polyfill.css" />
+    <Content Include="bower_components\dialog-polyfill\dialog-polyfill.js" />
     <Content Include="bower_components\polyfills\url.js" />
+    <Content Include="bower_components\promise-js\promise.js" />
     <Content Include="demo\index.css" />
     <Content Include="demo\index.html" />
     <Content Include="demo\index.js" />

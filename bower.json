@@ -29,5 +29,9 @@
   ],
   "dependencies": {
     "polyfills": "~0.1.6"
+  },
+  "devDependencies": {
+    "arcgis-layer-list": "https://github.com/WSDOT-GIS/arcgis-js-layer-list.git",
+    "promise-js": "~0.0.6"
   }
 }

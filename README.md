@@ -3,6 +3,8 @@
 
 Uses [URL API] and [Browser History] to update the web browsers URL query string as a map's extent is changed.
 
+[Demo](http://wsdot-gis.github.com/arcgis-query-string-utilities/demo/)
+
 Usage
 -----
 

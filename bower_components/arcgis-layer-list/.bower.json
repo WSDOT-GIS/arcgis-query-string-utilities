@@ -1,0 +1,48 @@
+{
+  "name": "arcgis-layer-list",
+  "homepage": "https://github.com/WSDOT-GIS/arcgis-js-layer-list",
+  "authors": [
+    "WSDOT"
+  ],
+  "description": "Layer list for ArcGIS API for JavaScript maps.",
+  "main": "LayerList.js",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "layer",
+    "list",
+    "TOC",
+    "table",
+    "of",
+    "contents"
+  ],
+  "license": "Unlicence",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "demo",
+    "*.sln",
+    "*.csproj",
+    "Web.config",
+    "Web.*.config"
+  ],
+  "dependencies": {
+    "customevent-polyfill": "~1.0.0",
+    "promises": "~1.0.10",
+    "dialog-polyfill": "~0.3.0"
+  },
+  "_release": "b89096482a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "b89096482a658500337b931c4dce7e7d8015bbe1"
+  },
+  "_source": "https://github.com/WSDOT-GIS/arcgis-js-layer-list.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/WSDOT-GIS/arcgis-js-layer-list.git",
+  "_direct": true
+}

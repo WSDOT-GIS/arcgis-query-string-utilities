@@ -49,7 +49,7 @@ require([
         window.theMap = map;
 
         // Create the QueryStringManager.
-        var qsManager = new QueryStringManager(map);
+        new QueryStringManager(map);
 
         // Create the layer list (for testing layer and sublayer visibility changes)
         var opLayers = response.itemInfo.itemData.operationalLayers;

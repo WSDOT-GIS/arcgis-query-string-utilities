@@ -15,7 +15,6 @@ define(function () {
                     continue;
                 }
 
-                console.debug("getVisibleLayers map", map);
                 if (!map.basemapLayerIds) {
                     console.warn("esri/Map.basemapLayerIds is undefined");
                 } else if (filterOutBasemaps && map.basemapLayerIds.indexOf(layerId) !== -1) {

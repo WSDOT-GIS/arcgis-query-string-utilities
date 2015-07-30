@@ -97,8 +97,8 @@ define(function () {
             if (e.lod) {
                 url.searchParams.set("center", state.center.join(","));
                 url.searchParams.set("zoom", state.zoom);
-            } else if (e.hasOwnProperty("visible") || e.hasOwnProperty("visibleLayers")) {
-                layer = this;
+            } else if (e.hasOwnProperty("visible") || e.hasOwnProperty("visibleLayers") || e.hasOwnProperty("layer")) {
+                layer = e.layer || this;
 
                 if (layer.visible) {
                     // TODO: Add or update layers object
@@ -144,6 +144,7 @@ define(function () {
             if (e.layer) {
                 setEventsForLayer(e.layer);
             }
+            updateQueryString(e);
         });
     };
 

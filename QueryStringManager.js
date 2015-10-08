@@ -1,4 +1,4 @@
-/// <reference path="C:\Users\jacobsj\Documents\GitHub\arcgis-query-string-utilities\bower_components/polyfills/url.js" />
+/// <reference path="./bower_components/polyfills/url.js" />
 /*global define*/
 define(function () {
     "use strict";
@@ -84,7 +84,12 @@ define(function () {
 
             layersValue = url.searchParams.get("layers");
             if (layersValue) {
-                layersValue = JSON.parse(layersValue);
+                try {
+                    layersValue = JSON.parse(layersValue);
+                } catch (err) {
+                    console.warn("Error parsing JSON", err);
+                    layersValue = getVisibleLayersQSValue(map);
+                }
             } else {
                 layersValue = getVisibleLayersQSValue(map);
             }
@@ -153,7 +158,7 @@ define(function () {
      * @param {Object} [options] - If an object is provided, the query string options will be added to it. Otherwise a new object will be created.
      * @returns {Object}
      */
-    QueryStringManager.getMapInitOptions = function(options) {
+    QueryStringManager.getMapInitOptions = function (options) {
         // If no options were specified, create a new one.
         options = options || {};
         var url, center, zoom;
@@ -184,7 +189,12 @@ define(function () {
         layerInfo = url.searchParams.get("layers") || null;
 
         if (layerInfo) {
-            layerInfo = JSON.parse(layerInfo);
+            try {
+                layerInfo = JSON.parse(layerInfo);
+            } catch (e) {
+                layerInfo = null;
+                console.warn("Could not parse layer info data from query string", layerInfo);
+            }
         }
 
         return layerInfo;

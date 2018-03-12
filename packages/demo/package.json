@@ -1,0 +1,25 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "Demo for arcgis-query-string-utils",
+  "main": "index.html",
+  "scripts": {
+    "prepare": "webpack"
+  },
+  "private": true,
+  "author": "WSDOT",
+  "license": "Unlicense",
+  "dependencies": {
+    "arcgis-query-string-utilities": "^2.0.0-alpha.0"
+  },
+  "devDependencies": {
+    "esri-loader": "^2.2.0",
+    "prettier": "^1.12.1",
+    "ts-loader": "^4.2.0",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.12.0",
+    "tslint-plugin-prettier": "^1.3.0",
+    "typescript": "^2.8.1",
+    "webpack": "^4.6.0"
+  }
+}

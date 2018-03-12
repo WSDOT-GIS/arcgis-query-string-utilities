@@ -1,0 +1,41 @@
+{
+  "name": "arcgis-query-string-utilities",
+  "version": "2.0.0-alpha.0",
+  "description": "Updates the query string as a map's extent is changed.",
+  "main": "QueryStringManager.js",
+  "types": "QueryStringManager.d.ts",
+  "files": [
+    "QueryStringManager.d.ts"
+  ],
+  "devDependencies": {
+    "@types/arcgis-js-api": "^3.23.0 <4",
+    "prettier": "^1.12.1",
+    "ts-loader": "^4.2.0",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.12.0",
+    "tslint-plugin-prettier": "^1.3.0",
+    "typescript": "^2.8.1",
+    "webpack": "^4.6.0"
+  },
+  "scripts": {
+    "prepare": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WSDOT-GIS/arcgis-query-string-utilities.git"
+  },
+  "keywords": [
+    "arcgis",
+    "esri",
+    "search",
+    "query",
+    "dom",
+    "url"
+  ],
+  "author": "WSDOT",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/WSDOT-GIS/arcgis-query-string-utilities/issues"
+  },
+  "homepage": "https://github.com/WSDOT-GIS/arcgis-query-string-utilities#readme"
+}

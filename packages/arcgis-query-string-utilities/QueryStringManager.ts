@@ -4,7 +4,7 @@ import EsriMap = require("esri/map");
 
 function getVisibleLayersQSValue(map: EsriMap) {
   const layersObj: {
-    [key: string]: number[] | boolean
+    [key: string]: number[] | boolean;
   } = {};
 
   function loop(layerIds: string[], filterOutBasemaps?: boolean) {
@@ -43,7 +43,7 @@ function getVisibleLayersQSValue(map: EsriMap) {
  * @returns {number[]}
  */
 function parseFloatArray(s: string) {
-  return s.split(",").map((n) => parseFloat(n));
+  return s.split(",").map(n => parseFloat(n));
 }
 
 /**
@@ -58,7 +58,9 @@ function getCenter(map: EsriMap): [number, number] {
   return [x, y];
 }
 
-export interface IVisibilityInfo { [s: string]: number[]; }
+export interface IVisibilityInfo {
+  [s: string]: number[];
+}
 
 /**
  * Updates the URL's query string in the browser as the map is changed.
@@ -74,18 +76,17 @@ export default class QueryStringManager {
   public static getMapInitOptions(options?: MapOptions): MapOptions {
     // If no options were specified, create a new one.
     options = options || {};
-    let url, center, zoom;
-    url = new URL(window.location.href);
+    const url = new URL(window.location.href);
     // Get the center from the URL.
-    center = url.searchParams.get("center");
-    if (center) {
-      center = parseFloatArray(center);
+    const centerString = url.searchParams.get("center");
+    if (centerString) {
+      const center = parseFloatArray(centerString);
       options.center = center;
     }
     // Get the zoom from the URL
-    zoom = url.searchParams.get("zoom");
-    if (zoom) {
-      zoom = parseInt(zoom, 10);
+    const zoomString = url.searchParams.get("zoom");
+    if (zoomString) {
+      const zoom = parseInt(zoomString, 10);
       options.zoom = zoom;
     }
 
@@ -122,7 +123,10 @@ export default class QueryStringManager {
      * is zoomed or if a layer's visibility changes.
      * @this {(esri/Map|esri/layers/Layer)}
      */
-    const updateQueryString = function(this: EsriMap | Layer | void, e: any | null) {
+    const updateQueryString = function(
+      this: EsriMap | Layer | void,
+      e: any | null
+    ) {
       if (e == null) {
         throw new Error("No event parameter was provided.");
       }
@@ -155,7 +159,7 @@ export default class QueryStringManager {
         e.hasOwnProperty("visibleLayers") ||
         e.hasOwnProperty("layer")
       ) {
-        const layer = e.layer || this as Layer;
+        const layer = e.layer || (this as Layer);
 
         if (layer.visible) {
           // TODO: Add or update layers object
@@ -187,15 +191,15 @@ export default class QueryStringManager {
     }
 
     // Attach layer events for layers currently in the map.
-    [map.layerIds, map.graphicsLayerIds].forEach(function(layerIds) {
-      layerIds.forEach(function(id) {
+    [map.layerIds, map.graphicsLayerIds].forEach(layerIds => {
+      layerIds.forEach(id => {
         const layer = map.getLayer(id);
         setEventsForLayer(layer);
       });
     });
 
     // Add event handler for map so that newly added layers will also be in the query string.
-    map.on("layer-add-result", function(e) {
+    map.on("layer-add-result", e => {
       if (e.layer) {
         setEventsForLayer(e.layer);
       }

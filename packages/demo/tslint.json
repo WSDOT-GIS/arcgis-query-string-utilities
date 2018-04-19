@@ -1,5 +1,5 @@
 {
     "extends": [
         "../arcgis-query-string-utilities/tslint.json"
-    ],
+    ]
 }

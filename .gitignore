@@ -1,6 +1,6 @@
 QueryStringManager.d.ts
 QueryStringManager.js
-demo/index.js
+packages/demo/dist
 
 .vscode/*
 !.vscode/settings.json

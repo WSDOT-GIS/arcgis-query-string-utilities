@@ -10,7 +10,7 @@ Installation
 ------------
 Run the following command to install this module using [Bower].
 
-    bower install arcgis-query-string-utilities --save
+    npm install @wsdot/arcgis-query-string-utilities --save
 
 
 Usage

@@ -1,4 +1,4 @@
-import QueryStringManager from "arcgis-query-string-utilities";
+import QueryStringManager from "@wsdot/arcgis-query-string-utilities";
 import { loadModules } from "esri-loader";
 
 loadModules(["esri/arcgis/utils", "esri/dijit/LayerList", "esri/map"], {

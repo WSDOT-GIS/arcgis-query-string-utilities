@@ -1,6 +1,6 @@
 {
   "name": "demo",
-  "version": "1.0.0",
+  "version": "2.0.0-alpha.1",
   "description": "Demo for arcgis-query-string-utils",
   "main": "index.html",
   "scripts": {
@@ -11,7 +11,7 @@
   "author": "WSDOT",
   "license": "Unlicense",
   "dependencies": {
-    "@wsdot/arcgis-query-string-utilities": "^2.0.0-alpha.0"
+    "@wsdot/arcgis-query-string-utilities": "^2.0.0-alpha.1"
   },
   "devDependencies": {
     "esri-loader": "^2.2.0",

@@ -8,7 +8,7 @@ Uses [URL API] and [Browser History] to update the web browsers URL query string
 
 Installation
 ------------
-Run the following command to install this module using [Bower].
+Run the following command to install this module into your project.
 
     npm install @wsdot/arcgis-query-string-utilities --save
 
@@ -36,6 +36,5 @@ require(["esri/map", "QueryStringManager"], function (Map, QueryStringManager) {
 });
 ```
 
-[Bower]:http://bower.io
 [Browser History]:https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Manipulating_the_browser_history
 [URL API]:https://url.spec.whatwg.org/#api

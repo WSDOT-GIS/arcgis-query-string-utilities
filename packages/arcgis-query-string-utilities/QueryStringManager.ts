@@ -2,6 +2,27 @@ import { MapOptions } from "esri";
 import Layer = require("esri/layers/layer");
 import EsriMap = require("esri/map");
 
+// tslint:disable:max-classes-per-file
+
+export class NotSupportedError extends Error {
+  public readonly unsupported: string[];
+  constructor(...unsupported: string[]) {
+    super(`Browser does not support these required features: ${unsupported}`);
+    this.unsupported = unsupported;
+  }
+}
+
+/**
+ * Detects support for URL and URLSearchParams.
+ */
+export function supportsURLParams() {
+  if (typeof URL !== "undefined" && typeof URLSearchParams !== "undefined") {
+    const url = new URL("http://localhost");
+    return !!url.searchParams;
+  }
+  return false;
+}
+
 function getVisibleLayersQSValue(map: EsriMap) {
   const layersObj: {
     [key: string]: number[] | boolean;
@@ -69,28 +90,31 @@ export interface IVisibilityInfo {
 export default class QueryStringManager {
   /**
    * Gets an options object using options defined in the query string.
-   * @param {Object} [options] - If an object is provided, the query string options
+   * @param options If an object is provided, the query string options
    * will be added to it. Otherwise a new object will be created.
-   * @returns {Object}
+   * @throws {NotSupportedError} Calling this method from a browser that does not support URLSearchParams or URL will throw a NotSupportedError.
    */
-  public static getMapInitOptions(options?: MapOptions): MapOptions {
+  public static getMapInitOptions(options?: MapOptions) {
     // If no options were specified, create a new one.
-    options = options || {};
-    const url = new URL(window.location.href);
-    // Get the center from the URL.
-    const centerString = url.searchParams.get("center");
-    if (centerString) {
-      const center = parseFloatArray(centerString);
-      options.center = center;
+    if (supportsURLParams()) {
+      options = options || {};
+      const url = new URL(window.location.href);
+      // Get the center from the URL.
+      const centerString = url.searchParams.get("center");
+      if (centerString) {
+        const center = parseFloatArray(centerString);
+        options.center = center;
+      }
+      // Get the zoom from the URL
+      const zoomString = url.searchParams.get("zoom");
+      if (zoomString) {
+        const zoom = parseInt(zoomString, 10);
+        options.zoom = zoom;
+      }
+      return options;
+    } else {
+      throw new NotSupportedError("URLSearchParams");
     }
-    // Get the zoom from the URL
-    const zoomString = url.searchParams.get("zoom");
-    if (zoomString) {
-      const zoom = parseInt(zoomString, 10);
-      options.zoom = zoom;
-    }
-
-    return options;
   }
 
   /**
@@ -98,26 +122,34 @@ export default class QueryStringManager {
    * @returns {Object.<string, number[]>}
    */
   public static getLayerVisibilityInfo() {
-    const url = new URL(window.location.href);
-    const layerInfoJson = url.searchParams.get("layers") || null;
-
     let layerInfo: IVisibilityInfo | null = null;
+    if (supportsURLParams()) {
+      const url = new URL(window.location.href);
+      const layerInfoJson = url.searchParams.get("layers") || null;
 
-    if (layerInfoJson) {
-      try {
-        layerInfo = JSON.parse(layerInfoJson);
-      } catch (e) {
-        layerInfo = null;
-        console.warn(
-          "Could not parse layer info data from query string",
-          layerInfo
-        );
+      if (layerInfoJson) {
+        try {
+          layerInfo = JSON.parse(layerInfoJson);
+        } catch (e) {
+          layerInfo = null;
+          console.warn(
+            "Could not parse layer info data from query string",
+            layerInfo
+          );
+        }
       }
     }
-
     return layerInfo;
   }
+  /**
+   * Creates a new instance of QueryStringManager.
+   * @param map An ArcGIS API map
+   * @throws {NotSupportedError} Thrown if called from browser that does not support URL or URLSearchParameters.
+   */
   constructor(public readonly map: EsriMap) {
+    if (!supportsURLParams()) {
+      throw new NotSupportedError("URL", "URLSearchParams");
+    }
     /**
      * Updates the query string in the browsers URL when the map
      * is zoomed or if a layer's visibility changes.

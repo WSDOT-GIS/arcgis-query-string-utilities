@@ -1,93 +1,113 @@
-import QueryStringManager from "@wsdot/arcgis-query-string-utilities";
-import { loadModules } from "esri-loader";
+import QueryStringManager, {
+  IVisibilityInfo,
+  NotSupportedError,
+  supportsURLParams
+} from "@wsdot/arcgis-query-string-utilities";
 
-loadModules(["esri/arcgis/utils", "esri/dijit/LayerList", "esri/map"], {
-  css: "https://js.arcgis.com/3.24/esri/css/esri.css",
-  url: "https://js.arcgis.com/3.24/",
-  dojoConfig: {
-    async: true
+import arcgisUtils = require("esri/arcgis/utils");
+import LayerList = require("esri/dijit/LayerList");
+import ArcGISDynamicMapServiceLayer = require("esri/layers/ArcGISDynamicMapServiceLayer");
+import Layer = require("esri/layers/layer");
+import EsriMap = require("esri/map");
+
+const mapId = "927b5daaa7f4434db4b312364489544d";
+
+const createMapOptions: any = {
+  usePopupManager: true
+};
+
+/**
+ * Gets the layer's position in its collection (either map.graphicsLayersIds or map.layerIds).
+ * @param map
+ * @param layerId
+ */
+function getLayerOrdinal(map: EsriMap, layerId: string) {
+  let ord: number | null = null;
+
+  for (let i = 0, l = map.graphicsLayerIds.length; i < l; i += 1) {
+    if (map.graphicsLayerIds[i] === layerId) {
+      ord = i + 1;
+      break;
+    }
   }
-}).then(([arcgisUtils, LayerList, EsriMap]) => {
-  const mapId = "927b5daaa7f4434db4b312364489544d";
 
-  const createMapOptions: any = {
-    usePopupManager: true
-  };
+  if (ord === null) {
+    for (let i = 0, l = map.layerIds.length; i < l; i += 1) {
+      if (map.layerIds[i] === layerId) {
+        ord = i + 1;
+        break;
+      }
+    }
+  }
 
-  // /**
-  //  * Gets the layer's position in its collection (either map.graphicsLayersIds or map.layerIds).
-  //  * @param {esri/Map} map
-  //  * @param {string} layerId
-  //  * @returns {number}
-  //  */
-  // function getLayerOrdinal(map: EsriMap, layerId: string): number | null {
-  //   let ord = null,
-  //     i,
-  //     l;
+  return ord;
+}
 
-  //   for (i = 0, l = map.graphicsLayerIds.length; i < l; i += 1) {
-  //     if (map.graphicsLayerIds[i] === layerId) {
-  //       ord = i + 1;
-  //       break;
-  //     }
-  //   }
+const urlParamsSupported = supportsURLParams();
 
-  //   if (ord === null) {
-  //     for (i = 0, l = map.layerIds.length; i < l; i += 1) {
-  //       if (map.layerIds[i] === layerId) {
-  //         ord = i + 1;
-  //         break;
-  //       }
-  //     }
-  //   }
+if (!urlParamsSupported) {
+  console.warn(
+    "This browser does not support required features. One or more of the following is not supported: URL, URLSearchParams, URL.prototype.searchParams"
+  );
+}
 
-  //   return ord;
-  // }
-
+if (urlParamsSupported) {
   // Update the map constructor options with those defined in the query string.
   createMapOptions.mapOptions = QueryStringManager.getMapInitOptions(
     createMapOptions
   );
+}
 
-  arcgisUtils
-    .createMap(mapId, "map", createMapOptions)
-    .then((response: any) => {
-      // Get the map object.
-      const map = response.map;
+arcgisUtils.createMap(mapId, "map", createMapOptions).then((response: any) => {
+  // Get the map object.
+  const map = response.map;
 
-      // Create the QueryStringManager.
-      // tslint:disable-next-line:no-unused-expression
-      new QueryStringManager(map);
+  if (urlParamsSupported) {
+    // Create the QueryStringManager.
+    // tslint:disable-next-line:no-unused-expression
+    new QueryStringManager(map);
+  }
 
-      const layers = arcgisUtils.getLayerList(response);
-      const tocDiv = document.getElementById("toc")!;
+  const layers = arcgisUtils.getLayerList(response);
+  const tocDiv = document.getElementById("toc")!;
 
-      const layerList = new LayerList({ map, layers }, tocDiv);
-      layerList.startup();
+  const layerList = new LayerList({ map, layers }, tocDiv);
+  layerList.startup();
 
-      // TODO: Update the layers' visibility to match the query string.
-      const layersInfo = QueryStringManager.getLayerVisibilityInfo();
-      //   if (layersInfo) {
-      //     for (const layerId in layersInfo) {
-      //       if (layersInfo.hasOwnProperty(layerId)) {
-      //         const qs = ["input[value='", "']"].join(layerId);
-      //         const checkbox = layerList.root.querySelector(qs);
-      //         if (checkbox) {
-      //           checkbox.checked = true;
-      //           const layer = map.getLayer(layerId);
-      //           layer.suspend();
-      //           layer.show();
-      //           const layerInfo = layersInfo[layerId];
-      //           // set sublayers.
-      //           if (layer.setVisibleLayers && Array.isArray(layerInfo)) {
-      //             layer.setVisibleLayers(layerInfo);
-      //           }
-      //           layer.resume();
-      //         } else {
-      //           console.warn("checkbox not found", qs);
-      //         }
-      //       }
-      //     }
-      //   }
-    });
+  let layersInfo: IVisibilityInfo | null = null;
+  if (urlParamsSupported) {
+    // Update the layers' visibility to match the query string.
+    layersInfo = QueryStringManager.getLayerVisibilityInfo();
+  }
+
+  if (!layersInfo) {
+    return;
+  }
+
+  for (const layerId in layersInfo) {
+    if (layersInfo.hasOwnProperty(layerId)) {
+      // Get layers with matching ID. (There should only be one match at most.)
+      const matchingLayers: Layer[] = layerList.layers.filter(
+        (l: Layer) => l.id === layerId
+      );
+      if (!matchingLayers.length) {
+        continue;
+      }
+      for (const layer of matchingLayers) {
+        const layerInfo = layersInfo[layerId];
+        layer.suspend();
+        try {
+          if (layerInfo) {
+            layer.show();
+          }
+          const dynamicLayer = layer as ArcGISDynamicMapServiceLayer;
+          if (Array.isArray(layerInfo) && dynamicLayer.setVisibleLayers) {
+            dynamicLayer.setVisibleLayers(layerInfo);
+          }
+        } finally {
+          layer.resume();
+        }
+      }
+    }
+  }
 });

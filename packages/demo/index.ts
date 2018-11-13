@@ -87,9 +87,9 @@ arcgisUtils.createMap(mapId, "map", createMapOptions).then((response: any) => {
   for (const layerId in layersInfo) {
     if (layersInfo.hasOwnProperty(layerId)) {
       // Get layers with matching ID. (There should only be one match at most.)
-      const matchingLayers: Layer[] = layerList.layers.filter(
-        (l: Layer) => l.id === layerId
-      );
+      const matchingLayers: Layer[] = layerList.layers
+        .filter(l => l.id === layerId)
+        .map(l => l.layer);
       if (!matchingLayers.length) {
         continue;
       }

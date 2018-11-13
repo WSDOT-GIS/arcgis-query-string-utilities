@@ -4,6 +4,10 @@ import EsriMap = require("esri/map");
 
 // tslint:disable:max-classes-per-file
 
+/**
+ * This error is thrown when the browser does not support the features required
+ * by this library, E.g., URL and URLSearchParams classes.
+ */
 export class NotSupportedError extends Error {
   public readonly unsupported: string[];
   constructor(...unsupported: string[]) {

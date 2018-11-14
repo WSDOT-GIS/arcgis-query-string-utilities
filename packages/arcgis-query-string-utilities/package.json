@@ -4,11 +4,14 @@
   "description": "Updates the query string as a map's extent is changed.",
   "main": "QueryStringManager.js",
   "types": "QueryStringManager.d.ts",
+  "module": "QueryStringManager",
   "files": [
+    "QueryStringManager.mjs",
     "QueryStringManager.d.ts"
   ],
   "devDependencies": {
     "@types/arcgis-js-api": "^3.26.0",
+    "@types/node": "^10.12.7",
     "prettier": "^1.15.2",
     "ts-loader": "^5.3.0",
     "tslint": "^5.11.0",
@@ -17,7 +20,7 @@
     "typescript": "^3.1.6"
   },
   "scripts": {
-    "prepare": "tsc",
+    "prepare": "node --no-warnings ./scripts/prepare.js",
     "lint": "tslint --project . --fix"
   },
   "repository": {

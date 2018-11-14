@@ -4,11 +4,11 @@ import QueryStringManager, {
   supportsURLParams
 } from "@wsdot/arcgis-query-string-utilities";
 
-import arcgisUtils = require("esri/arcgis/utils");
-import LayerList = require("esri/dijit/LayerList");
-import ArcGISDynamicMapServiceLayer = require("esri/layers/ArcGISDynamicMapServiceLayer");
-import Layer = require("esri/layers/layer");
-import EsriMap = require("esri/map");
+import arcgisUtils from "esri/arcgis/utils";
+import LayerList from "esri/dijit/LayerList";
+import ArcGISDynamicMapServiceLayer from "esri/layers/ArcGISDynamicMapServiceLayer";
+import Layer from "esri/layers/layer";
+import EsriMap from "esri/map";
 
 const mapId = "927b5daaa7f4434db4b312364489544d";
 
@@ -16,32 +16,32 @@ const createMapOptions: any = {
   usePopupManager: true
 };
 
-/**
- * Gets the layer's position in its collection (either map.graphicsLayersIds or map.layerIds).
- * @param map
- * @param layerId
- */
-function getLayerOrdinal(map: EsriMap, layerId: string) {
-  let ord: number | null = null;
+// /**
+//  * Gets the layer's position in its collection (either map.graphicsLayersIds or map.layerIds).
+//  * @param map
+//  * @param layerId
+//  */
+// function getLayerOrdinal(map: EsriMap, layerId: string) {
+//   let ord: number | null = null;
 
-  for (let i = 0, l = map.graphicsLayerIds.length; i < l; i += 1) {
-    if (map.graphicsLayerIds[i] === layerId) {
-      ord = i + 1;
-      break;
-    }
-  }
+//   for (let i = 0, l = map.graphicsLayerIds.length; i < l; i += 1) {
+//     if (map.graphicsLayerIds[i] === layerId) {
+//       ord = i + 1;
+//       break;
+//     }
+//   }
 
-  if (ord === null) {
-    for (let i = 0, l = map.layerIds.length; i < l; i += 1) {
-      if (map.layerIds[i] === layerId) {
-        ord = i + 1;
-        break;
-      }
-    }
-  }
+//   if (ord === null) {
+//     for (let i = 0, l = map.layerIds.length; i < l; i += 1) {
+//       if (map.layerIds[i] === layerId) {
+//         ord = i + 1;
+//         break;
+//       }
+//     }
+//   }
 
-  return ord;
-}
+//   return ord;
+// }
 
 const urlParamsSupported = supportsURLParams();
 

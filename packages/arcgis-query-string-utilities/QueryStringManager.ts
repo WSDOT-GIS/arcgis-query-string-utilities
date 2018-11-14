@@ -1,6 +1,6 @@
 import { MapOptions } from "esri";
-import Layer = require("esri/layers/layer");
-import EsriMap = require("esri/map");
+import Layer from "esri/layers/layer";
+import EsriMap from "esri/map";
 
 // tslint:disable:max-classes-per-file
 

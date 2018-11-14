@@ -2,6 +2,9 @@
 	"devDependencies": {
 		"lerna": "^3.4.3"
 	},
+	"scripts": {
+		"serve": "serve packages/demo"
+	},
 	"private": true,
 	"workspaces": [
 		"packages/*"

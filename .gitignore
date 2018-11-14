@@ -1,5 +1,6 @@
 QueryStringManager.d.ts
 QueryStringManager.js
+QueryStringManager.mjs
 packages/demo/dist
 
 .vscode/*

@@ -1,6 +1,6 @@
 {
   "name": "@wsdot/arcgis-query-string-utilities",
-  "version": "2.0.0-alpha.2",
+  "version": "2.0.0-alpha.3",
   "description": "Updates the query string as a map's extent is changed.",
   "main": "QueryStringManager.js",
   "types": "QueryStringManager.d.ts",

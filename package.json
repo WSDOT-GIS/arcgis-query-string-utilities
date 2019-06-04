@@ -1,6 +1,6 @@
 {
 	"devDependencies": {
-		"lerna": "^3.4.3"
+		"lerna": "^3.14.1"
 	},
 	"scripts": {
 		"serve": "serve packages/demo"

@@ -89,7 +89,6 @@ export interface IVisibilityInfo {
 
 /**
  * Updates the URL's query string in the browser as the map is changed.
- * @param {esri/Map} map
  */
 export default class QueryStringManager {
   /**
